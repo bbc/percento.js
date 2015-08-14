@@ -1,8 +1,24 @@
 var _ = require('lodash');
 
+function escape(delimiterObject) {
+    function escapeReplace(str) {
+        return str.replace(/([\[\]\{\}\(\)\$])/g, '\\\$1');
+    }
+
+    delimiterObject.first = escapeReplace(delimiterObject.first);
+    delimiterObject.last = escapeReplace(delimiterObject.last);
+}
+
 function JSONResolver( options ) {
 
-    var delimiter = options && options.delimiter ? options.delimiter : '%';
+    var del = { first: '%', last: '%' };
+    if (options && options.delimiter) {
+        del = {
+            first: options.delimiter.first || options.delimiter,
+            last: options.delimiter.last || options.delimiter
+        };
+    }
+    escape(del);
 
     function resolveWithContext(jsonString, ctx) {
 
@@ -15,17 +31,17 @@ function JSONResolver( options ) {
         while (jsonString !== prevString) {
             prevString = jsonString;
 
-            re = new RegExp(delimiter+'([\\w\\d-_\\.]+)'+delimiter,'g');
+            re = new RegExp(del.first+'([\\w\\d-_\\.]+)'+del.last,'g');
             keys = jsonString.match(re);
 
             if (!keys) continue;
 
             keys.forEach(function(key) {
-                re = new RegExp(delimiter+'([\\w\\d-_\\.]+)'+delimiter);
+                re = new RegExp(del.first+'([\\w\\d-_\\.]+)'+del.last);
                 key = key.match(re)[1];
                 value = _.get(ctx, key);
                 if (value) {
-                    replaceString = delimiter + key + delimiter;
+                    replaceString = new RegExp(del.first+key+del.last);
                     jsonString = jsonString.replace(replaceString, value);
                 }
             });

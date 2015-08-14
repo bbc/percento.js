@@ -183,11 +183,38 @@ describe('JSON variable resolver', function () {
 });
 
 describe('Custom delimiters', function () {
-    var jsonResolverDelimiter = require('../src/jsonResolver')({delimiter: '&&'});
     
     it('should resolve when set', function () {
+        var jsonResolverDelimiter = require('../src/jsonResolver')({delimiter: '&&'});
         var expected = { 'foo':'bar','baz':'luhrmann' },
                 json = { 'foo':'&&a&&','baz':'luhrmann' },
+                ctx = { 'a':'bar' };
+
+        expect(jsonResolverDelimiter.resolve(json, ctx)).toEqual(expected);
+    });
+
+    it('should resolve open and closed style delimiters', function () {
+        var jsonResolverDelimiter = require('../src/jsonResolver')({delimiter: {first: '[[', last: ']]'}});
+        var expected = { 'foo':'bar','baz':'luhrmann' },
+                json = { 'foo':'[[a]]','baz':'luhrmann' },
+                ctx = { 'a':'bar' };
+
+        expect(jsonResolverDelimiter.resolve(json, ctx)).toEqual(expected);
+    });
+
+    it('should resolve reserved regex characters', function () {
+        var jsonResolverDelimiter = require('../src/jsonResolver')({delimiter: '$$'});
+        var expected = { 'foo':'bar','baz':'luhrmann' },
+                json = { 'foo':'$$a$$','baz':'luhrmann' },
+                ctx = { 'a':'bar' };
+
+        expect(jsonResolverDelimiter.resolve(json, ctx)).toEqual(expected);
+    });
+
+    it('should resolve bash style things', function () {
+        var jsonResolverDelimiter = require('../src/jsonResolver')({delimiter: {first: '${', last: '}'}});
+        var expected = { 'foo':'bar','baz':'luhrmann' },
+                json = { 'foo':'${a}','baz':'luhrmann' },
                 ctx = { 'a':'bar' };
 
         expect(jsonResolverDelimiter.resolve(json, ctx)).toEqual(expected);
