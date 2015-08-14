@@ -1,0 +1,41 @@
+{
+    "name": "percento",
+  "version": "1.0.0",
+  "description": "Simple node package to mixin json variables",
+  "scripts": {
+      "test": "grunt default"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/domtronn/grunt-csslint-plus.git"
+  },
+	"dependencies": {
+    "grunt-contrib-csslint": ">= 0.4.0"
+  },
+  "keywords": [
+    "grunt",
+    "csslint",
+    "plus",
+    "css",
+    "rule",
+    "lint",
+    "custom",
+    "npm"
+  ],
+  "author": "Dominic Charlesworth <dgc336@gmail.com>",
+  "license": "ISC",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jasmine": "^0.9.1",
+    "grunt-contrib-jshint": "~0.10.0",
+    "grunt-contrib-nodeunit": "~0.4.1",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-jasmine-nodejs": "^1.4.2"
+  },
+  "dependencies": {
+    "lodash": "^3.10.1"
+  }
+}
