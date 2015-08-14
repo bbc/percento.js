@@ -182,6 +182,18 @@ describe('JSON variable resolver', function () {
     });
 });
 
+describe('Custom delimiters', function () {
+    var jsonResolverDelimiter = require('../src/jsonResolver')({delimiter: '&&'});
+    
+    it('should resolve when set', function () {
+        var expected = { 'foo':'bar','baz':'luhrmann' },
+                json = { 'foo':'&&a&&','baz':'luhrmann' },
+                ctx = { 'a':'bar' };
+
+        expect(jsonResolverDelimiter.resolve(json, ctx)).toEqual(expected);
+    });
+});
+
 describe('chaining', function() {
     describe('chain a single resolve', function () {
         it('should resolve normally, returning after calling value()', function () {

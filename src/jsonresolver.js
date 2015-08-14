@@ -1,40 +1,49 @@
 var _ = require('lodash');
 
-function resolveWithContext(jsonString, ctx) {
+function JSONResolver( options ) {
 
-    var prevString,
-        value,
-        keys;
+    var delimiter = options && options.delimiter ? options.delimiter : '%';
 
-    while (jsonString !== prevString) {
-        prevString = jsonString;
+    function resolveWithContext(jsonString, ctx) {
 
-        keys = jsonString.match(/%([\w\d-_\.]+)%/g);
+        var replaceString,
+            prevString,
+            value,
+            keys,
+            re;
 
-        if (!keys) continue;
+        while (jsonString !== prevString) {
+            prevString = jsonString;
 
-        keys.forEach(function(key) {
-            key = key.match(/%([\w\d-_\.]+)%/)[1];
-            value = _.get(ctx, key);
-            if (value) jsonString = jsonString.replace('%'+key+'%', value);
-        });
+            re = new RegExp(delimiter+'([\\w\\d-_\\.]+)'+delimiter,'g');
+            keys = jsonString.match(re);
+
+            if (!keys) continue;
+
+            keys.forEach(function(key) {
+                re = new RegExp(delimiter+'([\\w\\d-_\\.]+)'+delimiter);
+                key = key.match(re)[1];
+                value = _.get(ctx, key);
+                if (value) {
+                    replaceString = delimiter + key + delimiter;
+                    jsonString = jsonString.replace(replaceString, value);
+                }
+            });
+        }
+
+        return jsonString;
+
     }
 
-    return jsonString;
+    function resolve ( json, ctx ) {
+        var jsonString = JSON.stringify(json || { });
 
-}
+        jsonString = ctx ?
+            resolveWithContext(jsonString, ctx) :
+            resolveWithContext(jsonString, json);
 
-function resolve ( json, ctx ) {
-    var jsonString = JSON.stringify(json || { });
-
-    jsonString = ctx ?
-        resolveWithContext(jsonString, ctx) :
-        resolveWithContext(jsonString, json);
-
-    return JSON.parse(jsonString);
-}
-
-function JSONResolver() {
+        return JSON.parse(jsonString);
+    }
 
     return {
         chain: function() {
