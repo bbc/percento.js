@@ -1,7 +1,7 @@
 var jsonResolver = require('../src/jsonResolver');
 
 describe('JSON variable resolver', function () {
-	
+
 	  it('should provide a resolve function', function () {
         expect(jsonResolver().resolve).toBeDefined();
 	  });
@@ -14,7 +14,7 @@ describe('JSON variable resolver', function () {
     it('should return first arg if passed two', function () {
         var json = { 'foo':'bar','baz':'luhrmann' },
             ctx = { 'a':'b' };
-        
+
         expect(jsonResolver().resolve(json, ctx)).toEqual(json);
     });
 
@@ -32,7 +32,7 @@ describe('JSON variable resolver', function () {
             var expected = { 'foo':'baz luhrmann' },
                 json = { 'foo':'%name%' },
                 ctx = { 'name':'baz %surname%', 'surname': 'luhrmann' };
-        
+
             expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
         });
 
@@ -40,7 +40,7 @@ describe('JSON variable resolver', function () {
             var expected = { 'foo':'baz luhrmann' },
                 json = { 'foo':'%name%' },
                 ctx = {  'surname': 'luhrmann', 'name':'baz %surname%' };
-        
+
             expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
         });
 
@@ -48,7 +48,7 @@ describe('JSON variable resolver', function () {
             var expected = { 'foo':'%unfound%' },
                 json = { 'foo':'%unfound%' },
                 ctx = { };
-        
+
             expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
         });
 
@@ -56,7 +56,7 @@ describe('JSON variable resolver', function () {
             var expected = { 'foo':'%unfound%', 'baz':'luhrmann' },
                 json = { 'foo':'%unfound%', 'baz':'%baz%' },
                 ctx = { baz: 'luhrmann' };
-        
+
             expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
         });
 
@@ -104,7 +104,80 @@ describe('JSON variable resolver', function () {
 
             expect(jsonResolver().resolve(json)).toEqual(expected);
         });
-        
+
     });
-	
+
+	describe('when not given JSON as ctx', function() {
+		it('should ignore the ctx, returning the input JSON', function() {
+			var expected = {'input': '%steinbeck%'},
+			json = {'input': '%steinbeck%'},
+			ctx = 7;
+
+			expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+		});
+	});
+
+	describe('when not given JSON as json', function() {
+		describe('when given a valid ctx', function() {
+			it('will return the first input', function() {
+				var expected = 'Romeo + Juliet',
+		            json = 'Romeo + Juliet',
+		            ctx = { 'a':'bar' };
+
+				expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+			});
+		});
+
+		describe('when not given a valid ctx', function() {
+			it('will return the first input', function() {
+				var expected = 'Romeo + Juliet',
+		            json = 'Romeo + Juliet',
+		            ctx = 'The Great Gatsby';
+
+				expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+			});
+		});
+
+		describe('when json is falsy', function() {
+			describe('when undefined', function() {
+				it('will return an empty object', function() {
+					var expected = { },
+		                json = undefined,
+		                ctx = { 'name':'baz %surname%' };
+
+					expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+				});
+			});
+
+			describe('when false', function() {
+				it('will return an empty object', function() {
+					var expected = { },
+		                json = false,
+		                ctx = { 'name':'baz %surname%' };
+
+					expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+				});
+			});
+
+			describe('when null', function() {
+				it('will return an empty object', function() {
+					var expected = { },
+		                json = null,
+		                ctx = { 'name':'baz %surname%' };
+
+					expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+				});
+			});
+
+			describe('when 0', function() {
+				it('will return an empty object', function() {
+					var expected = { },
+		                json = 0,
+		                ctx = { 'name':'baz %surname%' };
+
+					expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+				});
+			});
+		});
+	});
 });
