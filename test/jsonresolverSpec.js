@@ -181,3 +181,32 @@ describe('JSON variable resolver', function () {
 		});
 	});
 });
+
+describe('chaining', function() {
+	describe('chain a single resolve', function () {
+		it('should resolve normally, returning after calling value()', function () {
+	        var expected = { 'foo':'bar','baz':'luhrmann' },
+	            json = { 'foo':'%a%','baz':'luhrmann' },
+	            ctx = { 'a':'bar' };
+
+	        expect(jsonResolver().chain().resolve(json, ctx).value()).toEqual(expected);
+		});
+	});
+
+	describe('chain a multiple chain resolve', function () {
+		it('should resolve normally, returning after calling value()', function () {
+	        var expected = { 'foo':'bang','baz':'luhrmann' },
+	            json = { 'foo':'%a%','baz':'luhrmann' },
+	            ctx = { 'a':'%bar%' },
+				ctx2 = { 'bar': 'bang'};
+
+	        expect(
+				jsonResolver()
+				.chain()
+				.resolve(json, ctx)
+				.resolve(ctx2)
+				.value()
+			).toEqual(expected);
+		});
+	});
+});
