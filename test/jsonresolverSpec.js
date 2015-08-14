@@ -2,9 +2,9 @@ var jsonResolver = require('../src/jsonResolver');
 
 describe('JSON variable resolver', function () {
 
-	  it('should provide a resolve function', function () {
+      it('should provide a resolve function', function () {
         expect(jsonResolver().resolve).toBeDefined();
-	  });
+      });
 
     it('should return json that its given', function () {
         var json = { 'foo':'bar','baz':'luhrmann' };
@@ -107,106 +107,106 @@ describe('JSON variable resolver', function () {
 
     });
 
-	describe('when not given JSON as ctx', function() {
-		it('should ignore the ctx, returning the input JSON', function() {
-			var expected = {'input': '%steinbeck%'},
-			json = {'input': '%steinbeck%'},
-			ctx = 7;
+    describe('when not given JSON as ctx', function() {
+        it('should ignore the ctx, returning the input JSON', function() {
+            var expected = {'input': '%steinbeck%'},
+                json = {'input': '%steinbeck%'},
+                ctx = 7;
 
-			expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
-		});
-	});
+            expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+        });
+    });
 
-	describe('when not given JSON as json', function() {
-		describe('when given a valid ctx', function() {
-			it('will return the first input', function() {
-				var expected = 'Romeo + Juliet',
-		            json = 'Romeo + Juliet',
-		            ctx = { 'a':'bar' };
+    describe('when not given JSON as json', function() {
+        describe('when given a valid ctx', function() {
+            it('will return the first input', function() {
+                var expected = 'Romeo + Juliet',
+                    json = 'Romeo + Juliet',
+                    ctx = { 'a':'bar' };
 
-				expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
-			});
-		});
+                expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+            });
+        });
 
-		describe('when not given a valid ctx', function() {
-			it('will return the first input', function() {
-				var expected = 'Romeo + Juliet',
-		            json = 'Romeo + Juliet',
-		            ctx = 'The Great Gatsby';
+        describe('when not given a valid ctx', function() {
+            it('will return the first input', function() {
+                var expected = 'Romeo + Juliet',
+                    json = 'Romeo + Juliet',
+                    ctx = 'The Great Gatsby';
 
-				expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
-			});
-		});
+                expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+            });
+        });
 
-		describe('when json is falsy', function() {
-			describe('when undefined', function() {
-				it('will return an empty object', function() {
-					var expected = { },
-		                json = undefined,
-		                ctx = { 'name':'baz %surname%' };
+        describe('when json is falsy', function() {
+            describe('when undefined', function() {
+                it('will return an empty object', function() {
+                    var expected = { },
+                        json = undefined,
+                        ctx = { 'name':'baz %surname%' };
 
-					expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
-				});
-			});
+                    expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+                });
+            });
 
-			describe('when false', function() {
-				it('will return an empty object', function() {
-					var expected = { },
-		                json = false,
-		                ctx = { 'name':'baz %surname%' };
+            describe('when false', function() {
+                it('will return an empty object', function() {
+                    var expected = { },
+                        json = false,
+                        ctx = { 'name':'baz %surname%' };
 
-					expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
-				});
-			});
+                    expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+                });
+            });
 
-			describe('when null', function() {
-				it('will return an empty object', function() {
-					var expected = { },
-		                json = null,
-		                ctx = { 'name':'baz %surname%' };
+            describe('when null', function() {
+                it('will return an empty object', function() {
+                    var expected = { },
+                        json = null,
+                        ctx = { 'name':'baz %surname%' };
 
-					expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
-				});
-			});
+                    expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+                });
+            });
 
-			describe('when 0', function() {
-				it('will return an empty object', function() {
-					var expected = { },
-		                json = 0,
-		                ctx = { 'name':'baz %surname%' };
+            describe('when 0', function() {
+                it('will return an empty object', function() {
+                    var expected = { },
+                        json = 0,
+                        ctx = { 'name':'baz %surname%' };
 
-					expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
-				});
-			});
-		});
-	});
+                    expect(jsonResolver().resolve(json, ctx)).toEqual(expected);
+                });
+            });
+        });
+    });
 });
 
 describe('chaining', function() {
-	describe('chain a single resolve', function () {
-		it('should resolve normally, returning after calling value()', function () {
-	        var expected = { 'foo':'bar','baz':'luhrmann' },
-	            json = { 'foo':'%a%','baz':'luhrmann' },
-	            ctx = { 'a':'bar' };
+    describe('chain a single resolve', function () {
+        it('should resolve normally, returning after calling value()', function () {
+            var expected = { 'foo':'bar','baz':'luhrmann' },
+                json = { 'foo':'%a%','baz':'luhrmann' },
+                ctx = { 'a':'bar' };
 
-	        expect(jsonResolver().chain().resolve(json, ctx).value()).toEqual(expected);
-		});
-	});
+            expect(jsonResolver().chain().resolve(json, ctx).value()).toEqual(expected);
+        });
+    });
 
-	describe('chain a multiple chain resolve', function () {
-		it('should resolve normally, returning after calling value()', function () {
-	        var expected = { 'foo':'bang','baz':'luhrmann' },
-	            json = { 'foo':'%a%','baz':'luhrmann' },
-	            ctx = { 'a':'%bar%' },
-				ctx2 = { 'bar': 'bang'};
+    describe('chain a multiple chain resolve', function () {
+        it('should resolve normally, returning after calling value()', function () {
+            var expected = { 'foo':'bang','baz':'luhrmann' },
+                json = { 'foo':'%a%','baz':'luhrmann' },
+                ctx = { 'a':'%bar%' },
+                ctx2 = { 'bar': 'bang'};
 
-	        expect(
-				jsonResolver()
-				.chain()
-				.resolve(json, ctx)
-				.resolve(ctx2)
-				.value()
-			).toEqual(expected);
-		});
-	});
+            expect(
+                jsonResolver()
+                .chain()
+                .resolve(json, ctx)
+                .resolve(ctx2)
+                .value()
+            ).toEqual(expected);
+        });
+    });
 });
