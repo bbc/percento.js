@@ -15,11 +15,18 @@ module.exports = function(grunt) {
             test: {
                 specs: ['test/**/*Spec.js']
             }
+        },
+        release:  {
+            options: {
+                add: false,
+                beforeRelease: ['default']
+            }
         }
     });
 
     // These plugins provide necessary tasks.
     
+    grunt.loadNpmTasks('grunt-release');
     grunt.loadNpmTasks('grunt-jasmine-nodejs');
     grunt.loadNpmTasks('grunt-contrib-jshint');
 
