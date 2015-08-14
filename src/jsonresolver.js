@@ -6,7 +6,7 @@ function resolveWithContext(jsonString, ctx) {
         value, 
         keys;
     
-    while (jsonString != prevString) {
+    while (jsonString !== prevString) {
         prevString = jsonString;
         
         keys = jsonString.match(/%([\w\d-_\.]+)%/g);

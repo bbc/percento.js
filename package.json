@@ -1,43 +1,41 @@
 {
-    "name": "percento",
-    "version": "1.0.0",
-    "description": "Simple node package to mixin json variables",
-    "scripts": {
-        "test": "grunt default"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git://github.com/domtronn/percento.js.git"
-    },
-	  "dependencies": {
-        "grunt-contrib-csslint": ">= 0.4.0"
-    },
-    "keywords": [
-        "javascript",
-        "json",
-        "resolve",
-        "handlebars"
-    ],
-    "author": "Dominic Charlesworth <dgc336@gmail.com>",
-    "contributors": [
-        {
-            "name": "Joel Howard",
-            "email": "joelt.howard@gmail.com"
-        }
-    ], 
-    "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/domtronn/percento.js/issues"
-    },
-    "engines": {
-        "node": ">= 0.10.0"
-    },
-    "devDependencies": {
-        "grunt": "^0.4.5",
-        "grunt-contrib-jshint": "~0.10.0",
-        "grunt-jasmine-nodejs": "^1.4.2"
-    },
-    "dependencies": {
-        "lodash": "^3.10.1"
+  "name": "percento",
+  "version": "1.0.0",
+  "description": "Simple node package to mixin json variables",
+  "scripts": {
+    "test": "grunt default"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/domtronn/percento.js.git"
+  },
+  "dependencies": {
+    "lodash": "^3.10.1"
+  },
+  "keywords": [
+    "javascript",
+    "json",
+    "resolve",
+    "handlebars"
+  ],
+  "author": "Dominic Charlesworth <dgc336@gmail.com>",
+  "contributors": [
+    {
+      "name": "Joel Howard",
+      "email": "joelt.howard@gmail.com"
     }
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/domtronn/percento.js/issues"
+  },
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-jasmine-nodejs": "^1.4.2",
+    "jshint-stylish": "^2.0.1"
+  }
 }
