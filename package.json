@@ -1,41 +1,42 @@
 {
-    "name": "percento",
-  "version": "1.0.0",
+  "name": "percento",
+  "version": "1.0.1",
   "description": "Simple node package to mixin json variables",
+  "main": "src/jsonresolver.js", 
   "scripts": {
-      "test": "grunt default"
+    "test": "grunt default"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/domtronn/grunt-csslint-plus.git"
+    "url": "git://github.com/domtronn/percento.js.git"
   },
-	"dependencies": {
-    "grunt-contrib-csslint": ">= 0.4.0"
+  "dependencies": {
+    "lodash": "^3.10.1"
   },
   "keywords": [
-    "grunt",
-    "csslint",
-    "plus",
-    "css",
-    "rule",
-    "lint",
-    "custom",
-    "npm"
+    "javascript",
+    "json",
+    "resolve",
+    "handlebars"
   ],
   "author": "Dominic Charlesworth <dgc336@gmail.com>",
+  "contributors": [
+    {
+      "name": "Joel Howard",
+      "email": "joelt.howard@gmail.com"
+    }
+  ],
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/domtronn/percento.js/issues"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
   "devDependencies": {
     "grunt": "^0.4.5",
-    "grunt-contrib-jasmine": "^0.9.1",
-    "grunt-contrib-jshint": "~0.10.0",
-    "grunt-contrib-nodeunit": "~0.4.1",
-    "grunt-contrib-watch": "~0.6.1",
-    "grunt-jasmine-nodejs": "^1.4.2"
-  },
-  "dependencies": {
-    "lodash": "^3.10.1"
+    "grunt-contrib-jshint": "^0.11.2",
+    "grunt-jasmine-nodejs": "^1.4.2",
+    "jshint-stylish": "^2.0.1"
   }
 }
