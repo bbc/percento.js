@@ -14,7 +14,7 @@ For example, given a json configuration like the following
 }
 ```
 And a context of
-```json
+```js
 {
   singer: "Mraz",
   actor: "Statham",
