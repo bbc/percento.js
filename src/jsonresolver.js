@@ -1,40 +1,65 @@
 var _ = require('lodash');
 
-function resolveWithContext(jsonString, ctx) {
-
-    var prevString,
-        value,
-        keys;
-
-    while (jsonString !== prevString) {
-        prevString = jsonString;
-
-        keys = jsonString.match(/%([\w\d-_\.]+)%/g);
-
-        if (!keys) continue;
-
-        keys.forEach(function(key) {
-            key = key.match(/%([\w\d-_\.]+)%/)[1];
-            value = _.get(ctx, key);
-            if (value) jsonString = jsonString.replace('%'+key+'%', value);
-        });
+function escape(delimiterObject) {
+    function escapeReplace(str) {
+        return str.replace(/([\[\]\{\}\(\)\$\*])/g, '\\\$1');
     }
 
-    return jsonString;
-
+    delimiterObject.first = escapeReplace(delimiterObject.first);
+    delimiterObject.last = escapeReplace(delimiterObject.last);
 }
 
-function resolve ( json, ctx ) {
-    var jsonString = JSON.stringify(json || { });
+function JSONResolver( options ) {
 
-    jsonString = ctx ?
-        resolveWithContext(jsonString, ctx) :
-        resolveWithContext(jsonString, json);
+    var del = { first: '%', last: "%" };
+    if (options && options.delimiter) {
+        del = {
+            first: options.delimiter.first || options.delimiter,
+            last: options.delimiter.last || options.delimiter
+        };
+    }
+    escape(del);
 
-    return JSON.parse(jsonString);
-}
+    function resolveWithContext(jsonString, ctx) {
 
-function JSONResolver() {
+        var replaceString,
+            prevString,
+            value,
+            keys,
+            re;
+
+        while (jsonString !== prevString) {
+            prevString = jsonString;
+
+            re = new RegExp(del.first+'([\\w\\d-_\\.]+)'+del.last,'g');
+            keys = jsonString.match(re);
+
+            if (!keys) continue;
+
+            keys.forEach(function(key) {
+                re = new RegExp(del.first+'([\\w\\d-_\\.]+)'+del.last);
+                key = key.match(re)[1];
+                value = _.get(ctx, key);
+                if (value) {
+                    replaceString = new RegExp(del.first+key+del.last);
+                    jsonString = jsonString.replace(replaceString, value);
+                }
+            });
+        }
+
+        return jsonString;
+
+    }
+
+    function resolve ( json, ctx ) {
+        var jsonString = JSON.stringify(json || { });
+
+        jsonString = ctx ?
+            resolveWithContext(jsonString, ctx) :
+            resolveWithContext(jsonString, json);
+
+        return JSON.parse(jsonString);
+    }
 
     return {
         chain: function() {

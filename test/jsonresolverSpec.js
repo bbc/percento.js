@@ -182,6 +182,54 @@ describe('JSON variable resolver', function () {
     });
 });
 
+describe('Custom delimiters', function () {
+
+    it('should resolve when set', function () {
+        var jsonResolverDelimiter = require('../src/jsonResolver')({delimiter: '&&'});
+        var expected = { 'foo':'bar','baz':'luhrmann' },
+                json = { 'foo':'&&a&&','baz':'luhrmann' },
+                ctx = { 'a':'bar' };
+
+        expect(jsonResolverDelimiter.resolve(json, ctx)).toEqual(expected);
+    });
+
+    it('should resolve open and closed style delimiters', function () {
+        var jsonResolverDelimiter = require('../src/jsonResolver')({delimiter: {first: '[[', last: ']]'}});
+        var expected = { 'foo':'bar','baz':'luhrmann' },
+                json = { 'foo':'[[a]]','baz':'luhrmann' },
+                ctx = { 'a':'bar' };
+
+        expect(jsonResolverDelimiter.resolve(json, ctx)).toEqual(expected);
+    });
+
+    it('should resolve reserved regex characters', function () {
+        var jsonResolverDelimiter = require('../src/jsonResolver')({delimiter: '$$'});
+        var expected = { 'foo':'bar','baz':'luhrmann' },
+                json = { 'foo':'$$a$$','baz':'luhrmann' },
+                ctx = { 'a':'bar' };
+
+        expect(jsonResolverDelimiter.resolve(json, ctx)).toEqual(expected);
+    });
+
+    it('should resolve bash style things', function () {
+        var jsonResolverDelimiter = require('../src/jsonResolver')({delimiter: {first: '${', last: '}'}});
+        var expected = { 'foo':'bar','baz':'luhrmann' },
+                json = { 'foo':'${a}','baz':'luhrmann' },
+                ctx = { 'a':'bar' };
+
+        expect(jsonResolverDelimiter.resolve(json, ctx)).toEqual(expected);
+    });
+
+    it('should resolve silly regexp things', function () {
+        var jsonResolverDelimiter = require('../src/jsonResolver')({delimiter: '**'});
+        var expected = { 'foo':'bar','baz':'luhrmann' },
+                json = { 'foo':'**a**','baz':'luhrmann' },
+                ctx = { 'a':'bar' };
+
+        expect(jsonResolverDelimiter.resolve(json, ctx)).toEqual(expected);
+    });
+});
+
 describe('chaining', function() {
     describe('chain a single resolve', function () {
         it('should resolve normally, returning after calling value()', function () {
