@@ -2,7 +2,7 @@ var _ = require('lodash');
 
 function escape(delimiterObject) {
     function escapeReplace(str) {
-        return str.replace(/([\[\]\{\}\(\)\$])/g, '\\\$1');
+        return str.replace(/([\[\]\{\}\(\)\$\*])/g, '\\\$1');
     }
 
     delimiterObject.first = escapeReplace(delimiterObject.first);
@@ -11,7 +11,7 @@ function escape(delimiterObject) {
 
 function JSONResolver( options ) {
 
-    var del = { first: '%', last: '%' };
+    var del = { first: '%', last: "%" };
     if (options && options.delimiter) {
         del = {
             first: options.delimiter.first || options.delimiter,
