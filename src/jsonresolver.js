@@ -5,7 +5,7 @@ function resolveWithContext(jsonString, ctx) {
     var prevString,
         value,
         keys;
-        
+
     while (jsonString !== prevString) {
         prevString = jsonString;
 
@@ -24,19 +24,32 @@ function resolveWithContext(jsonString, ctx) {
 
 }
 
+function resolve ( json, ctx ) {
+    var jsonString = JSON.stringify(json || { });
+
+    jsonString = ctx ?
+        resolveWithContext(jsonString, ctx) :
+        resolveWithContext(jsonString, json);
+
+    return JSON.parse(jsonString);
+}
+
 function JSONResolver() {
 
     return {
-
-        resolve: function ( json, ctx ) {
-            var jsonString = JSON.stringify(json || { });
-
-            jsonString = ctx ?
-                resolveWithContext(jsonString, ctx) :
-                resolveWithContext(jsonString, json);
-
-            return JSON.parse(jsonString);
-        }
+        chain: function() {
+            return {
+                lastAns: undefined,
+                resolve: function ( json, ctx ) {
+                    this.lastAns = resolve(this.lastAns || json, ctx || json);
+                    return this;
+                },
+                value: function() {
+                    return this.lastAns || { };
+                }
+            };
+        },
+        resolve: resolve
 
     };
 
