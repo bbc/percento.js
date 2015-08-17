@@ -27,7 +27,7 @@ Will produce the following
   "Jason": [
     "Statham",
     "Voorhees",
-    "Mraz%"
+    "Mraz"
   ]
 }
 ```
@@ -42,7 +42,7 @@ Then require it and use it with
 ```js
 var percento = require('percento');
 
-percento().resolve(json, ctx)
+percento().resolve(json, ctx);
 ```
 
 ## Options ##
