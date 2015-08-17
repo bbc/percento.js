@@ -32,7 +32,7 @@ Will produce the following
 }
 ```
 
-## Installation ##
+## Installation & Usage ##
 
 To install this package to your project, run
 ```
@@ -87,7 +87,7 @@ This uses [`lodash`'s deep get](https://lodash.com/docs#get) method, so the _acc
 
 #### Self Resolution ####
 
-Call `percento` with _only_ a json object, will try to resolve all mixins using _itself_ as the context, for example
+Calling `percento` with a single argument will try to resolve all mixins using _itself_ as the context, for example
 ```js
 var json = {
     name: "william",
