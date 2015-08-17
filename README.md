@@ -44,6 +44,7 @@ var percento = require('percento');
 
 percento().resolve(json, ctx);
 ```
+Percento _returns_ the modified string, so you will have to assign it to a variable.
 
 ## Options ##
 
@@ -64,14 +65,14 @@ percento().chain().resolve(json, ctx1).resolve(ctx2).resolve(ctx3).value();
 
 #### Nested Properties ####
 
-You can also define nested properties from within a context, for example
+You can also define nested properties from within a context, for example this json
 ```json
 {
   "name": "%people[0].name%",
   "surname": "%people[1].surname%"
 }
 ```
-With context
+Can access the properties in this context
 ```js
 {
     people:[
@@ -81,11 +82,20 @@ With context
 }
 
 ```
-Will produce
-```json
-{
-  "name": "Juliet",
-  "surname": "Montague"
-}
-```
+To pick the values `"Juliet"` and `"Montague"`.
 This uses [`lodash`'s deep get](https://lodash.com/docs#get) method, so the _accessor string_ should behave the same way
+
+#### Self Resolution ####
+
+Call `percento` with _only_ a json object, will try to resolve all mixins using _itself_ as the context, for example
+```js
+var json = {
+    name: "william",
+    surname: "shakespeare",
+    fullname: "%name% %surname%"
+}
+
+var result = percento().resolve(json);
+
+result.fullname; // william shakespeare
+```
