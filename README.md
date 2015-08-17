@@ -22,6 +22,7 @@ And a context of
 }
 ```
 Will produce the following
+```json
 {
   "Jason": [
     "Statham",
@@ -29,6 +30,7 @@ Will produce the following
     "Mraz%"
   ]
 }
+```
 
 ## Installation ##
 
