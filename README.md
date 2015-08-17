@@ -75,14 +75,8 @@ With context
 ```js
 {
     people:[
-        {
-            name: "Juliet"
-            surname: "Capulet"
-        },
-        {
-            name: "Romeo"
-            surname: "Montague"
-        }
+        { name: "Juliet", surname: "Capulet" },
+        { name: "Romeo", surname: "Montague" }
     ]
 }
 
