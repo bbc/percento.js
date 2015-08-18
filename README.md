@@ -1,9 +1,11 @@
-# percento.js
+# percento.js #
 
-This is a node module designed to give similar templating from [Handlebars](http://handlebarsjs.com/) to JSON. It allows you define your JSON files with _mixins_ that will be resolved by this package.
+**`Percento.js`** is designed to be [Handlebars](http://handlebarsjs.com/) for JSON. It is a node module that allows you to template JSON objects with _mixins_ that can be resolved with a _context_ by this package.
 
 
-For example, given a json configuration like the following
+_Mixins_ are defined using delimiters, the **default** ones are `%...%`.
+
+For example, given the following JSON object _(template)_
 ```json
 {
   "Jason": [
@@ -13,7 +15,7 @@ For example, given a json configuration like the following
   ]
 }
 ```
-And a context of
+And a _context_ of
 ```js
 {
   singer: "Mraz",
@@ -21,7 +23,7 @@ And a context of
   murderer: "Voorhees"
 }
 ```
-Will produce the following
+**`Percento.js`** will produce the following
 ```json
 {
   "Jason": [
@@ -50,29 +52,30 @@ Percento _returns_ the modified string, so you will have to assign it to a varia
 
 #### Custom Delimiteres ####
 
-`Percento.js` can be configured with a delimiter, or pair of opening and closing delimiters so that you can define your own matchers.
+**`Percento.js`** can be configured with a custom delimiter, or pair of opening and closing delimiters to define your own matchers.
 ```js
-percento({delimiter: '$$'}).resolve(json, ctx);
-percento({delimiter: {first: '{{', last: '}}'}}).resolve(json, ctx);
+percento({delimiter: '$$'}).resolve(template, ctx);
+percento({delimiter: {first: '{{', last: '}}'}}).resolve(template, ctx);
 ```
 
 #### Chaining Resolutions ####
 
-You can also chain together resolutions in the following manner
+You can chain resolutions calls together in the following manner
 ```js
-percento().chain().resolve(json, ctx1).resolve(ctx2).resolve(ctx3).value();
+percento().chain().resolve(template, ctx1).resolve(ctx2).resolve(ctx3).value();
 ```
+Chaining passes the resolved template through to each subsequent `resolve` call. You must call `.value()` at the end to return the current resolved template.
 
 #### Nested Properties ####
 
-You can also define nested properties from within a context, for example this json
+_Templates_ can access nested properties of a _context_, for example this JSON object
 ```json
 {
   "name": "%people[0].name%",
   "surname": "%people[1].surname%"
 }
 ```
-Can access the properties in this context
+Can access the properties in this _context_
 ```js
 {
     people:[
@@ -83,19 +86,19 @@ Can access the properties in this context
 
 ```
 To pick the values `"Juliet"` and `"Montague"`.
-This uses [`lodash`'s deep get](https://lodash.com/docs#get) method, so the _accessor string_ should behave the same way
+This uses [`lodash`'s deep get](https://lodash.com/docs#get) method, so the _accessor string_ in the _template_ should behave the same way.
 
 #### Self Resolution ####
 
 Calling `percento` with a single argument will try to resolve all mixins using _itself_ as the context, for example
 ```js
-var json = {
+var template = {
     name: "william",
     surname: "shakespeare",
     fullname: "%name% %surname%"
 }
 
-var result = percento().resolve(json);
+var result = percento().resolve(template);
 
 result.fullname; // william shakespeare
 ```
