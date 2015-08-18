@@ -18,13 +18,13 @@ module.exports = function(grunt) {
         },
         release:  {
             options: {
-                beforeRelease: ['default']
+                beforeBump: ['default']
             }
         }
     });
 
     // These plugins provide necessary tasks.
-    
+
     grunt.loadNpmTasks('grunt-release');
     grunt.loadNpmTasks('grunt-jasmine-nodejs');
     grunt.loadNpmTasks('grunt-contrib-jshint');
