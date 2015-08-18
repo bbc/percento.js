@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/domtronn/percento.js.git"
+    "url": "git://github.com/fmtvp/percento.js.git"
   },
   "dependencies": {
     "lodash": "^3.10.1"
@@ -28,7 +28,7 @@
   ],
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/domtronn/percento.js/issues"
+    "url": "https://github.com/fmtvp/percento.js/issues"
   },
   "engines": {
     "node": ">= 0.10.0"
