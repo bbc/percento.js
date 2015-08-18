@@ -1,9 +1,8 @@
 # percento.js #
 
-**`Percento.js`** is designed to be [Handlebars](http://handlebarsjs.com/) for JSON. It is a node module that allows you to template JSON objects with _mixins_ that can be resolved with a _context_ by this package.
+**`Percento.js`** is designed to be [Handlebars](http://handlebarsjs.com/) for JSON.
 
-
-_Mixins_ are defined using delimiters, the **default** ones are `%...%`.
+It is a node module that allows you to template JSON objects with _mixins_ that can be resolved with a _context_ by this package. _Mixins_ are defined using delimiters, the default ones are `%...%`.
 
 For example, given the following JSON object _(template)_
 ```json
