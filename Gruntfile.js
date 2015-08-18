@@ -15,11 +15,6 @@ module.exports = function(grunt) {
             test: {
                 specs: ['test/**/*Spec.js']
             }
-        },
-        release:  {
-            options: {
-                beforeBump: ['default']
-            }
         }
     });
 
@@ -32,5 +27,6 @@ module.exports = function(grunt) {
     // Default task.
     grunt.registerTask('default', ['jasmine_nodejs:test','jshint']);
     grunt.registerTask('test', ['jasmine_nodejs:test']);
+    grunt.registerTask('publish', ['default', 'release']);
 
 };
