@@ -11,7 +11,7 @@ function escape(delimiterObject) {
 
 function JSONResolver( options ) {
 
-    var del = { first: '%', last: "%" };
+    var del = { first: '%', last: '%' };
     if (options && options.delimiter) {
         del = {
             first: options.delimiter.first || options.delimiter,
