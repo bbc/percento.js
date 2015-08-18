@@ -1,6 +1,6 @@
 {
   "name": "percento",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "Simple node package to mixin json variables",
   "main": "src/jsonresolver.js",
   "scripts": {
