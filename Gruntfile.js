@@ -18,7 +18,6 @@ module.exports = function(grunt) {
         },
         release:  {
             options: {
-                add: false,
                 beforeRelease: ['default']
             }
         }
