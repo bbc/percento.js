@@ -4,14 +4,15 @@
   "description": "Simple node package to mixin json variables",
   "main": "src/jsonresolver.js",
   "scripts": {
-    "test": "grunt default"
+    "test": "grunt default",
+    "postversion": "git push origin master --no-verify && git push --tags origin master --no-verify"
   },
   "repository": {
     "type": "git",
     "url": "git://github.com/fmtvp/percento.js.git"
   },
   "dependencies": {
-    "lodash": "^3.10.1"
+    "lodash": "^4.17.21"
   },
   "keywords": [
     "javascript",
