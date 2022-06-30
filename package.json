@@ -11,7 +11,7 @@
     "url": "git://github.com/fmtvp/percento.js.git"
   },
   "dependencies": {
-    "lodash": "^3.10.1"
+    "lodash": "^4.17.21"
   },
   "keywords": [
     "javascript",
