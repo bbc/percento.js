@@ -4,7 +4,8 @@
   "description": "Simple node package to mixin json variables",
   "main": "src/jsonresolver.js",
   "scripts": {
-    "test": "grunt default"
+    "test": "grunt default",
+    "postversion": "git push origin master --no-verify && git push --tags origin master --no-verify"
   },
   "repository": {
     "type": "git",
